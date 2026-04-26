@@ -19,7 +19,7 @@ app.get("/stats", async (req, res) => {
         if (!game) {
             return res.status(500).json({ error: "no game data" });
         }
-        
+
         let likes = 0;
         let dislikes = 0;
 
@@ -54,4 +54,3 @@ app.get("/stats", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT);
-});
