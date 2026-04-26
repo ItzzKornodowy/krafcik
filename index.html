@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBBY DO KRAFCIKA</title>
+<link rel="icon" href="logo.png">
+
+<style>
+:root{
+    --bg1:#00ffff;
+    --bg2:#ff7a00;
+    --glass:rgba(255,255,255,.10);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    font-family:Segoe UI,Arial,sans-serif;
+    color:#fff;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));
+}
+
+.container{
+    width:92%;
+    max-width:700px;
+    padding:3rem;
+    border-radius:24px;
+    text-align:center;
+    background:var(--glass);
+    backdrop-filter:blur(18px);
+}
+
+.logo{
+    width:110px;
+    margin-bottom:10px;
+}
+
+h1{
+    margin:0;
+    font-size:2.35rem;
+}
+
+.desc{
+    margin:14px 0 18px;
+    opacity:.88;
+}
+
+/* BUTTONS */
+.buttons{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:10px;
+}
+
+.big-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    padding:14px 18px;
+    border-radius:14px;
+    text-decoration:none;
+    color:#fff;
+    font-weight:700;
+    transition:.22s;
+    box-shadow:0 8px 20px rgba(0,0,0,.22);
+}
+
+.big-btn:hover{
+    transform:scale(1.03);
+    filter:brightness(1.06);
+}
+
+.big-btn img{
+    width:28px;
+    height:28px;
+}
+
+.play-btn{
+    background:linear-gradient(135deg,#00ffcc,#ff7a00);
+}
+
+.youtube-btn{
+    background:linear-gradient(135deg,#ff2d2d,#b00000);
+}
+
+.tiktok-btn{
+    background:linear-gradient(135deg,#111,#333);
+}
+
+/* STATUS */
+.status{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin-top:20px;
+    font-size:1.05rem;
+}
+
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#999;
+}
+
+.online{
+    background:#00ff7b;
+    box-shadow:0 0 12px #00ff7b;
+}
+
+.offline{
+    background:#ff3b3b;
+    box-shadow:0 0 12px #ff3b3b;
+}
+
+/* STATS */
+.stats-bar{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-top:18px;
+    padding:12px 16px;
+    border-radius:14px;
+    background:rgba(0,0,0,.24);
+}
+
+.stat-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    position:relative;
+    cursor:pointer;
+}
+
+.stat-item img{
+    width:18px;
+    height:18px;
+}
+
+/* TOOLTIP */
+.stat-item::after{
+    content:attr(data-tip);
+    position:absolute;
+    bottom:135%;
+    left:50%;
+    transform:translateX(-50%);
+    background:#111;
+    color:#fff;
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:.8rem;
+    white-space:nowrap;
+    opacity:0;
+    pointer-events:none;
+    transition:.18s;
+}
+
+.stat-item:hover::after{
+    opacity:1;
+}
+
+@media(max-width:600px){
+    .container{
+        padding:2rem 1rem;
+    }
+
+    h1{
+        font-size:1.8rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="logo.png" class="logo">
+
+<h1>OBBY DO KRAFCIKA</h1>
+
+<p class="desc">Strona poświęcona Krafcikowi, jego mediom społecznościowym oraz grze "Obby Do Krafcika".
+
+<div class="buttons">
+
+<a class="big-btn play-btn"
+href="https://www.roblox.com/pl/games/100749164775058/OBBY-DO-KRAFCIKA"
+target="_blank">
+<img src="graj.png">
+Obby Do Krafcika: Zagraj już dziś
+</a>
+
+<a class="big-btn youtube-btn"
+href="https://www.youtube.com/@obbydokrafcika"
+target="_blank">
+<img src="youtube.png">
+Filmiki z Obby Do Krafcika
+</a>
+
+<a class="big-btn tiktok-btn"
+href="https://www.tiktok.com/@mrkrafcik"
+target="_blank">
+<img src="tiktok.png">
+Codzienne życie Krafcika
+</a>
+
+</div>
+
+<div class="status">
+<span id="dot" class="dot"></span>
+<span id="status">Łączenie...</span>
+</div>
+
+<div id="stats" class="stats-bar"></div>
+
+</div>
+
+<script>
+async function update(){
+
+const dot = document.getElementById("dot");
+const status = document.getElementById("status");
+const stats = document.getElementById("stats");
+
+try{
+
+const res = await fetch("http://localhost:3000/stats");
+const data = await res.json();
+
+dot.className = "dot online";
+status.innerText = `Online: ${data.players}`;
+
+stats.innerHTML = `
+<div class="stat-item" data-tip="Aktywni Gracze">
+<img src="gracz.png">${data.players}
+</div>
+
+<div class="stat-item" data-tip="Visits">
+<img src="visits.png">${data.visits}
+</div>
+
+<div class="stat-item" data-tip="Ulubione">
+<img src="fav.png">${data.favorites}
+</div>
+
+<div class="stat-item" data-tip="Polubienia">
+<img src="like.png">${data.likes}
+</div>
+
+<div class="stat-item" data-tip="Niepolubienia">
+<img src="dislike.png">${data.dislikes}
+</div>
+`;
+
+}catch(e){
+
+dot.className = "dot offline";
+status.innerText = "Brak połączenia z serwerem";
+stats.innerHTML = "";
+
+}
+
+}
+
+update();
+setInterval(update,8000);
+</script>
+
+</body>
+</html>
