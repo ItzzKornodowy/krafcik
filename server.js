@@ -9,7 +9,6 @@ const UNIVERSE_ID = 8823142749;
 app.get("/stats", async (req, res) => {
     try {
 
-        // 🔥 dane gry
         const gameRes = await fetch(
             `https://games.roblox.com/v1/games?universeIds=${UNIVERSE_ID}`
         );
@@ -20,8 +19,7 @@ app.get("/stats", async (req, res) => {
         if (!game) {
             return res.status(500).json({ error: "no game data" });
         }
-
-        // 👍 votes (czasem działa, czasem Roblox blokuje)
+        
         let likes = 0;
         let dislikes = 0;
 
@@ -37,7 +35,6 @@ app.get("/stats", async (req, res) => {
             dislikes = votes?.downVotes ?? 0;
 
         } catch (e) {
-            // jeśli Roblox zablokuje votes → nie wywala serwera
             likes = 0;
             dislikes = 0;
         }
@@ -55,6 +52,6 @@ app.get("/stats", async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log("Serwer działa 🤪🍔");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT);
 });
