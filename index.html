@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OBBY DO KRAFCIKA</title>
+<title>Oficjalna strona Krafcika</title>
 <link rel="icon" href="logo.png">
 
 <style>
@@ -12,175 +12,88 @@
     --bg2:#ff7a00;
     --glass:rgba(255,255,255,.10);
 }
-
-*{
-    box-sizing:border-box;
-}
-
+*{box-sizing:border-box;}
 body{
     margin:0;
     min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
     font-family:Segoe UI,Arial,sans-serif;
     color:#fff;
     background:linear-gradient(135deg,var(--bg1),var(--bg2));
 }
-
 .container{
     width:92%;
     max-width:700px;
+    margin:40px auto;
     padding:3rem;
     border-radius:24px;
     text-align:center;
     background:var(--glass);
     backdrop-filter:blur(18px);
 }
+.logo{width:110px;}
+h1{margin:10px 0;}
+.desc{opacity:.85}
 
-.logo{
-    width:110px;
-    margin-bottom:10px;
-}
-
-h1{
-    margin:0;
-    font-size:2.35rem;
-}
-
-.desc{
-    margin:14px 0 18px;
-    opacity:.88;
-}
-
-/* BUTTONS */
-.buttons{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    margin-top:10px;
-}
-
+.buttons{display:flex;flex-direction:column;gap:12px;}
 .big-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    padding:14px 18px;
-    border-radius:14px;
-    text-decoration:none;
-    color:#fff;
-    font-weight:700;
-    transition:.22s;
-    box-shadow:0 8px 20px rgba(0,0,0,.22);
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    padding:14px;border-radius:14px;color:#fff;text-decoration:none;
+    font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.25);transition:.2s;
 }
+.big-btn:hover{transform:scale(1.03);}
+.big-btn img{width:24px;height:24px;}
+.play-btn{background:linear-gradient(135deg,#00ffcc,#ff7a00);}
+.youtube-btn{background:#ff2d2d;}
+.tiktok-btn{background:#222;}
 
-.big-btn:hover{
-    transform:scale(1.03);
-    filter:brightness(1.06);
+.section{
+    margin-top:80px;padding:20px;border-radius:16px;
+    background:rgba(0,0,0,.25);backdrop-filter:blur(10px);
+    transform:translateY(60px);opacity:0;transition:1s ease;
 }
+.section.show{transform:translateY(0);opacity:1;}
+#posts h3{ margin:10px 0 5px; color:#00ffcc; }
+#posts p{ margin:0 0 10px; opacity:.9; line-height:1.5; }
 
-.big-btn img{
-    width:28px;
-    height:28px;
+
+.modal{
+    display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,.7);justify-content:center;align-items:center;z-index:999;
 }
-
-.play-btn{
-    background:linear-gradient(135deg,#00ffcc,#ff7a00);
+.modal-content{
+    position:relative;background:#111;padding:30px;border-radius:20px;
+    text-align:center;max-width:420px;width:92%;
 }
-
-.youtube-btn{
-    background:linear-gradient(135deg,#ff2d2d,#b00000);
+.close{
+    position:absolute;right:14px;top:8px;cursor:pointer;font-size:26px;
 }
-
-.tiktok-btn{
-    background:linear-gradient(135deg,#111,#333);
-}
-
-/* STATUS */
-.status{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-    margin-top:20px;
-    font-size:1.05rem;
-}
-
-.dot{
-    width:12px;
-    height:12px;
-    border-radius:50%;
-    background:#999;
-}
-
-.online{
-    background:#00ff7b;
-    box-shadow:0 0 12px #00ff7b;
-}
-
-.offline{
-    background:#ff3b3b;
-    box-shadow:0 0 12px #ff3b3b;
-}
-
-/* STATS */
 .stats-bar{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:18px;
-    flex-wrap:wrap;
-    margin-top:18px;
-    padding:12px 16px;
-    border-radius:14px;
-    background:rgba(0,0,0,.24);
+    display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:16px 0 8px;
 }
-
 .stat-item{
-    display:flex;
-    align-items:center;
-    gap:6px;
+    display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.25);
+    padding:8px 10px;border-radius:10px;
+}
+.stat-item img{width:18px;height:18px;}
+
+.external-link{
     position:relative;
-    cursor:pointer;
+    outline:2px dashed rgba(255,255,255,.7);
+    outline-offset:3px;
+    animation:pulseLink 2s ease-in-out infinite;
 }
-
-.stat-item img{
-    width:18px;
-    height:18px;
+.external-link .link-url{
+    font-family:Consolas,"Courier New",monospace;
+    font-weight:600;
+    font-size:.85em;
+    text-decoration:underline;
+    text-underline-offset:3px;
+    letter-spacing:.3px;
+    opacity:.95;
 }
-
-/* TOOLTIP */
-.stat-item::after{
-    content:attr(data-tip);
-    position:absolute;
-    bottom:135%;
-    left:50%;
-    transform:translateX(-50%);
-    background:#111;
-    color:#fff;
-    padding:6px 10px;
-    border-radius:8px;
-    font-size:.8rem;
-    white-space:nowrap;
-    opacity:0;
-    pointer-events:none;
-    transition:.18s;
-}
-
-.stat-item:hover::after{
-    opacity:1;
-}
-
-@media(max-width:600px){
-    .container{
-        padding:2rem 1rem;
-    }
-
-    h1{
-        font-size:1.8rem;
-    }
+@keyframes pulseLink{
+    0%,100%{ box-shadow:0 8px 20px rgba(0,0,0,.25), 0 0 0 rgba(255,255,255,0); }
+    50%{ box-shadow:0 8px 20px rgba(0,0,0,.25), 0 0 14px rgba(255,255,255,.65); }
 }
 </style>
 </head>
@@ -188,96 +101,203 @@ h1{
 <body>
 
 <div class="container">
+    <img src="logo.png" class="logo">
+    <h1>Mr. Krafcik</h1>
+    <p class="desc">Strona poświęcona Krafcikowi i jego grze.</p>
 
-<img src="logo.png" class="logo">
+    <div class="buttons">
+        <a class="big-btn play-btn" href="#" id="openGame">
+            <img src="graj.png"> Roblox – Obby
+        </a>
+        <a class="big-btn youtube-btn" href="#" id="openYT">
+            <img src="youtube.png"> YouTube
+        </a>
+        <a class="big-btn tiktok-btn" href="#" id="openTT">
+            <img src="tiktok.png"> TikTok
+        </a>
+    </div>
 
-<h1>OBBY DO KRAFCIKA</h1>
+    <section class="section" id="about-section">
+        <h2>O MNIE</h2>
+        <p id="about-text">Ładowanie opisu...</p>
+    </section>
 
-<p class="desc">Strona poświęcona Krafcikowi, jego mediom społecznościowym oraz grze "Obby Do Krafcika".
-
-<div class="buttons">
-
-<a class="big-btn play-btn"
-href="https://www.roblox.com/pl/games/100749164775058/OBBY-DO-KRAFCIKA"
-target="_blank">
-<img src="graj.png">
-Obby Do Krafcika: Zagraj już dziś
-</a>
-
-<a class="big-btn youtube-btn"
-href="https://www.youtube.com/@obbydokrafcika"
-target="_blank">
-<img src="youtube.png">
-Filmiki z Obby Do Krafcika
-</a>
-
-<a class="big-btn tiktok-btn"
-href="https://www.tiktok.com/@mrkrafcik"
-target="_blank">
-<img src="tiktok.png">
-Codzienne życie Krafcika
-</a>
-
+    <section class="section" id="news">
+        <h2>OGŁOSZENIA</h2>
+        <div id="posts">Ładowanie ogłoszenia...</div>
+    </section>
 </div>
 
-<div class="status">
-<span id="dot" class="dot"></span>
-<span id="status">Łączenie...</span>
+<div id="gameModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Roblox</h2>
+
+    <div class="stats-bar">
+        <div class="stat-item"><img src="gracz.png"> <span id="r_players">0</span></div>
+        <div class="stat-item"><img src="visits.png"> <span id="r_visits">0</span></div>
+        <div class="stat-item"><img src="like.png"> <span id="r_likes">0</span></div>
+    </div>
+
+    <a href="https://www.roblox.com/pl/games/100749164775058/OBBY-DO-KRAFCIKA" target="_blank" class="big-btn play-btn">
+        Zagraj teraz
+    </a>
+  </div>
 </div>
 
-<div id="stats" class="stats-bar"></div>
+<div id="ytModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>YouTube</h2>
 
+    <div class="stats-bar">
+        <div class="stat-item"><img src="wideo.png"> <span id="yt_videos">0</span></div>
+        <div class="stat-item"><img src="subskrybent.png"> <span id="yt_subs">0</span></div>
+    </div>
+
+    <a href="https://www.youtube.com/@obbydokrafcika" target="_blank" class="big-btn youtube-btn">
+        Otwórz kanał
+    </a>
+  </div>
+</div>
+
+<div id="ttModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>TikTok</h2>
+
+    <div class="stats-bar">
+        <div class="stat-item"><img src="wideo.png"> <span id="tt_videos">0</span></div>
+        <div class="stat-item"><img src="serduszko.png"> <span id="tt_likes">0</span></div>
+        <div class="stat-item"><img src="obserwacja.png"> <span id="tt_followers">0</span></div>
+    </div>
+
+    <a href="https://www.tiktok.com/@mrkrafcik" target="_blank" class="big-btn tiktok-btn">
+        Otwórz profil
+    </a>
+  </div>
 </div>
 
 <script>
-async function update(){
+function bindModal(openId, modalId){
+    const open = document.getElementById(openId);
+    const modal = document.getElementById(modalId);
+    const close = modal.querySelector(".close");
 
-const dot = document.getElementById("dot");
-const status = document.getElementById("status");
-const stats = document.getElementById("stats");
-
-try{
-
-const res = await fetch("http://localhost:3000/stats");
-const data = await res.json();
-
-dot.className = "dot online";
-status.innerText = `Online: ${data.players}`;
-
-stats.innerHTML = `
-<div class="stat-item" data-tip="Aktywni Gracze">
-<img src="gracz.png">${data.players}
-</div>
-
-<div class="stat-item" data-tip="Visits">
-<img src="visits.png">${data.visits}
-</div>
-
-<div class="stat-item" data-tip="Ulubione">
-<img src="fav.png">${data.favorites}
-</div>
-
-<div class="stat-item" data-tip="Polubienia">
-<img src="like.png">${data.likes}
-</div>
-
-<div class="stat-item" data-tip="Niepolubienia">
-<img src="dislike.png">${data.dislikes}
-</div>
-`;
-
-}catch(e){
-
-dot.className = "dot offline";
-status.innerText = "Brak połączenia z serwerem";
-stats.innerHTML = "";
-
+    open.onclick = (e)=>{ e.preventDefault(); modal.style.display="flex"; };
+    close.onclick = ()=> modal.style.display="none";
+    window.addEventListener("click",(e)=>{ if(e.target===modal) modal.style.display="none"; });
+}
+bindModal("openGame","gameModal");
+bindModal("openYT","ytModal");
+bindModal("openTT","ttModal");
+const API = "http://localhost:3000"; 
+async function loadRoblox(){
+    try{
+        const res = await fetch(API + "/roblox");
+        const d = await res.json();
+        r_players.textContent = d.players ?? 0;
+        r_visits.textContent = d.visits ?? 0;
+        r_likes.textContent = d.likes ?? 0;
+    }catch(e){}
 }
 
+async function loadYouTube(){
+    try{
+        const res = await fetch(API + "/youtube");
+        const d = await res.json();
+        yt_videos.textContent = d.videos ?? 0;
+        yt_subs.textContent = d.subs ?? 0;
+    }catch(e){}
 }
 
-update();
-setInterval(update,8000);
+async function loadTikTok(){
+    try{
+        const res = await fetch(API + "/tiktok");
+        const d = await res.json();
+        tt_videos.textContent = d.videos ?? 0;
+        tt_likes.textContent = d.likes ?? 0;
+        tt_followers.textContent = d.followers ?? 0;
+    }catch(e){}
+}
+
+async function refreshAll(){
+    await Promise.all([loadRoblox(), loadYouTube(), loadTikTok()]);
+}
+refreshAll();
+setInterval(refreshAll, 15000);
+
+// ===== SCROLL ANIMACJE =====
+const sections=document.querySelectorAll(".section");
+const obs=new IntersectionObserver(e=>{
+    e.forEach(x=>{ if(x.isIntersecting) x.target.classList.add("show"); });
+},{threshold:0.2});
+sections.forEach(s=>obs.observe(s));
+function highlightExternalLinks(){
+    document.querySelectorAll('a[href^="https://"]').forEach(a=>{
+        if(a.dataset.highlighted) return; 
+
+        const rawUrl = a.getAttribute('href');
+        const stripped = rawUrl.replace(/^https:\/\/(www\.)?/i, '');
+
+        const span = document.createElement('span');
+        span.className = 'link-url';
+        span.textContent = stripped;
+        a.appendChild(document.createElement('br'));
+        a.appendChild(span);
+
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.classList.add('external-link');
+        a.dataset.highlighted = 'true';
+    });
+}
+highlightExternalLinks();
+</script>
+
+<script type="module">
+// Firebase (jak miałeś)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "TWÓJ_KLUCZ",
+    authDomain: "krafcik-b49d0.firebaseapp.com",
+    projectId: "krafcik-b49d0",
+    storageBucket: "krafcik-b49d0.appspot.com"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadLatestPost(){
+    try{
+        const q = query(collection(db,"posts"), orderBy("time","desc"), limit(1));
+        const snap = await getDocs(q);
+        let html="";
+        if(!snap.empty){
+            snap.forEach(d=>{
+                const x=d.data();
+                html=`<h3>${x.title}</h3><p>${x.content}</p>`;
+            });
+        }else html="Brak ogłoszeń";
+        document.getElementById("posts").innerHTML = html;
+    }catch(e){
+        document.getElementById("posts").innerHTML = "Błąd ładowania.";
+    }
+}
+
+async function loadAbout(){
+    try{
+        const snap = await getDoc(doc(db,"site","about"));
+        if(snap.exists()){
+            document.getElementById("about-text").textContent = snap.data().text;
+        }
+    }catch(e){}
+}
+
+loadLatestPost();
+loadAbout();
 </script>
 
 </body>
